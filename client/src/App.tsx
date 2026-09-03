@@ -1,6 +1,9 @@
 import {useCompanyData} from "./hooks/useCompanyData.ts";
 import {FETCH_STATUS} from "./types/state.ts";
 import {normalizeTree} from "./utils/normalizeTree.ts";
+import {Table} from "./components/Table/Table.tsx";
+import {MONTHS} from "./constants/months.const.ts";
+import {Layout} from "./components/Layout/Layout.tsx";
 
 export const App = () => {
     const companyData = useCompanyData();
@@ -11,5 +14,10 @@ export const App = () => {
 
     const normalizedData = normalizeTree(companyData.data);
 
-    return <div>{JSON.stringify(normalizedData)}</div>
+    return (
+        <Layout>
+            <h1>Clients</h1>
+            <Table data={normalizedData} months={MONTHS} />
+        </Layout>
+    )
 }
