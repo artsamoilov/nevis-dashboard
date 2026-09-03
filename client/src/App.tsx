@@ -1,7 +1,9 @@
 import {useCompanyData} from "./hooks/useCompanyData.ts";
 import {FETCH_STATUS} from "./types/state.ts";
 import {normalizeTree} from "./utils/normalizeTree.ts";
+import {getChannelTotals} from "./utils/getChannelTotals.ts";
 import {Table} from "./components/Table/Table.tsx";
+import {Chart} from "./components/Chart/Chart.tsx";
 import {MONTHS} from "./constants/months.const.ts";
 import {Layout} from "./components/Layout/Layout.tsx";
 
@@ -17,6 +19,7 @@ export const App = () => {
     return (
         <Layout>
             <h1>Clients</h1>
+            <Chart node={getChannelTotals(normalizedData)} months={MONTHS} />
             <Table data={normalizedData} months={MONTHS} />
         </Layout>
     )
