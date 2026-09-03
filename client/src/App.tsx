@@ -1,5 +1,6 @@
 import {useCompanyData} from "./hooks/useCompanyData.ts";
 import {FETCH_STATUS} from "./types/state.ts";
+import {normalizeTree} from "./utils/normalizeTree.ts";
 
 export const App = () => {
     const companyData = useCompanyData();
@@ -8,5 +9,7 @@ export const App = () => {
 
     if (companyData.status === FETCH_STATUS.ERROR) return <div>{companyData.error}</div>;
 
-    return <div>{JSON.stringify(companyData.data)}</div>
+    const normalizedData = normalizeTree(companyData.data);
+
+    return <div>{JSON.stringify(normalizedData)}</div>
 }
