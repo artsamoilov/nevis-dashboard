@@ -7,20 +7,36 @@ import {Chart} from "./components/Chart/Chart.tsx";
 import {MONTHS} from "./constants/months.const.ts";
 import {Layout} from "./components/Layout/Layout.tsx";
 
+import * as S from "./App.styled.ts";
+
 export const App = () => {
     const companyData = useCompanyData();
-
-    if (companyData.status === FETCH_STATUS.LOADING) return <div>Loading...</div>;
-
-    if (companyData.status === FETCH_STATUS.ERROR) return <div>{companyData.error}</div>;
-
-    const normalizedData = normalizeTree(companyData.data);
+    const normalizedData = companyData.status === FETCH_STATUS.SUCCESS ? normalizeTree(companyData.data) : null;
 
     return (
         <Layout>
             <h1>Clients</h1>
-            <Chart node={getChannelTotals(normalizedData)} months={MONTHS} />
-            <Table data={normalizedData} months={MONTHS} />
+
+            {companyData.status === FETCH_STATUS.LOADING && (
+                <S.StatusCard role="status" aria-live="polite">
+                    <S.Spinner aria-hidden="true"/>
+                    Loading client data…
+                </S.StatusCard>
+            )}
+
+            {companyData.status === FETCH_STATUS.ERROR && (
+                <S.StatusCard role="alert">
+                    Couldn't load client data: {companyData.error}
+                    <S.RetryButton onClick={companyData.refetch}>Try again</S.RetryButton>
+                </S.StatusCard>
+            )}
+
+            {normalizedData && (
+                <>
+                    <Chart node={getChannelTotals(normalizedData)} months={MONTHS}/>
+                    <Table data={normalizedData} months={MONTHS}/>
+                </>
+            )}
         </Layout>
-    )
+    );
 }

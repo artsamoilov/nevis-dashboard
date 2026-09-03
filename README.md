@@ -75,8 +75,6 @@ long-term fix.
 ## What I'd do next
 
 - Move the table to `role="treegrid"` with `aria-level`/`aria-posinset`/`aria-setsize`.
-- Style the loading/error states properly and wire up the `refetch` the data hook already
-  exposes (currently plain text).
 - Resolve the chart-vs-data mismatch with design: either chart by branch (always available
   company-wide) or get channel data plumbed through for everyone.
 - Get data inconsistency fixed at the source.
