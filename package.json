@@ -1,0 +1,14 @@
+{
+    "name": "nevis-dashboard",
+    "version": "1.0.0",
+    "license": "MIT",
+    "workspaces": ["client", "server"],
+    "scripts": {
+        "dev": "concurrently \"yarn workspace server dev\" \"yarn workspace client dev\"",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "private": true,
+    "devDependencies": {
+        "concurrently": "10.0.5"
+    }
+}
